@@ -23,7 +23,7 @@ export default {
     onUpload(){
       const fd = new FormData();
       fd.append('image',this.selectedFile, this.selectedFile.name)
-      axios.post('http://localhost:3000/api/files/upload',fd, {
+      axios.post('/api/files/upload',fd, {
         onUploadProgress: uploadEvent => {
           console.log('Upload Progress: ' + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%')
         }

@@ -4,7 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+
 const bodyParser = require('body-parser');
+var app = express();
+var port = process.env.PORT || 3001; // set PORT
 
 mongoose.Promise = global.Promise;
 
@@ -13,15 +16,6 @@ const promise = mongoose.connect(mongoDB, {
   useNewUrlParser: true 
  // useMongoClient: true 
 });
-
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var tests = require('./routes/test'); //add
-var login = require('./routes/login');
-var fileRouter = require('./routes/file');
-
-var app = express();
 
 app.use(require('connect-history-api-fallback')());
 
@@ -37,27 +31,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'uploads')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/tests',tests); //add
-app.use('/api/login', login);
-app.use('/api/files', fileRouter);
+var server = app.listen(port);
+server.timeout = 5000;
+var io = require('socket.io')(server);
 
+require('./app/routes')(app);
+app.set('socketio',io);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+console.log('SERVER ON');
+exports = module.exports = app;
