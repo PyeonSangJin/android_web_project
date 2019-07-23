@@ -1,11 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-const mongoose = require('mongoose');
+var express        = require('express');
+var app            = express();
+var mongoose       = require('mongoose');
+var bodyParser     = require('body-parser');
+var methodOverride = require('method-override');
+var logger         = require('morgan');
+var path           = require('path');
+var cors = require('cors');
 
-const bodyParser = require('body-parser');
 var app = express();
 var port = process.env.PORT || 3001; // set PORT
 
@@ -17,18 +18,19 @@ const promise = mongoose.connect(mongoDB, {
  // useMongoClient: true 
 });
 
-app.use(require('connect-history-api-fallback')());
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
+app.use(logger('tiny'));
+app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-frorm-urlencoded
+app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
+
+
+//app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 var server = app.listen(port);

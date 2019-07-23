@@ -1,40 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Users from '@/components/AllUserPage'
-import User from '@/components/UsersPage'
-import SignUp from '@/components/login/SignUp'
-import imgUpload from '@/components/imgupload'
+import Gallery01 from '@/components/gallery/gallery01'
+import Gallery_Upload01 from '@/components/gallery/upload01'
+import Splash from '@/components/skeleton/insertSplash'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+ // mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/gallery01',
+      name: 'gallery_section_01',
+      component: Gallery01
     },
     {
-      path: '/user',
-      name: 'user',
-      component: Users
-    },
-    {
-      path: '/user/:id',
-      name: 'detail',
-      component: User
-    },
-    {
-      path: '/login/SignUp',
-      name: 'SignUp',
-      component: SignUp
-    },
+      path: '/gallery01/upload01',
+      name: 'gallery_section_01',
+      component: Gallery_Upload01
+    },    
     {
       path: '/test',
-      name: 'imgUpload',
-      component: imgUpload
+      name: 'gallery_section_01',
+      component: Splash
     }
   ]
 })

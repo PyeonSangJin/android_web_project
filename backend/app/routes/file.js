@@ -1,9 +1,8 @@
 const express = require('express');
 const multer = require('multer');
+var app = express();
 
 var fileController = require('../controller/fileController');
-
-var app = express();
 
 const storage = multer.diskStorage({
   destination(req, file, callback) {

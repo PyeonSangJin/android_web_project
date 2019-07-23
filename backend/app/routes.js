@@ -1,11 +1,11 @@
 var fileRouter = require('./routes/file');
+var splashRouter = require('./routes/splash');
+var skeletonRouter = require('./routes/skeleton');
+var galleryRouter = require('./routes/gallery')
 
 module.exports = function(app){
-    
     app.use('/api/files', fileRouter());
-
-    //route to handle all vue requests
-    app.get('/', function(req, res, next) {
-        res.sendFile(path.join(__dirname, '../public', 'index.html'));
-    });
+    app.use('/api/splash', splashRouter());
+    app.use('/api/skeleton', skeletonRouter());
+    app.use('/api/gallery', galleryRouter());
 }

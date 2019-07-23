@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var fileSchema = new Schema({
   name: String,
-  coverimg: String
+  src: String
 });
 
 module.exports = mongoose.model('file', fileSchema);

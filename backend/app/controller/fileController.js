@@ -1,10 +1,7 @@
 var File = require('../models/file');
 
 module.exports = {
-
-    
     addFile: function (req, res, next) {
-        console.log(`HERE : ` + req);
 
         try {
             const files = req.files;
@@ -34,7 +31,7 @@ module.exports = {
 
             var newImage = new File({
                 name: originalName,
-                coverimg: fileName
+                coverimg: (`uploads/`+fileName)
             })
             newImage.save(function (error, data) {
                 if (error) {
